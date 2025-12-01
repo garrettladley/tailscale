@@ -54,7 +54,7 @@ func getBaselineFinalResponse(requestID string, responses ...response.Response) 
 		err = firstErr
 	}
 
-	serverID := xstrings.HashStrings(append([]string{"aggregated_servers"}, serverIDs...)...)
+	serverID := xstrings.HashStrings("|", append([]string{"aggregated_servers"}, serverIDs...)...)
 	return response.Response{
 		RequestID:      requestID,
 		Latency:        maxLatency,
