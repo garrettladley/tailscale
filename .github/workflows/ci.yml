@@ -27,17 +27,11 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
           cache: true
 
-      - name: Install gofumpt
-        run: go install mvdan.cc/gofumpt@latest
-
-      - name: Check Code Formatting
-        run: |
-          unformatted_files=$(gofumpt -l .)
-          if [ -n "$unformatted_files" ]; then
-            echo "::error::Files not formatted with gofumpt"
-            echo "$unformatted_files"
-            exit 1
-          fi
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.6
+          args: fmt --timeout=5m
 
   lint:
     name: Lint
