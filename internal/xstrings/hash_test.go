@@ -5,7 +5,7 @@ import (
 )
 
 func TestHashStringsDeterminism(t *testing.T) {
-	// t.Parallel() to test linter
+	t.Parallel()
 
 	const delimiter = "|"
 	strs := []string{
