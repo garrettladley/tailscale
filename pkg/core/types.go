@@ -2,13 +2,6 @@ package core
 
 import "time"
 
-// Task 1: Project Setup (30 min)
-// ├── go.mod, Makefile, README stub
-// └── pkg/core/types.go
-//     ├── type Request struct { ID, Timestamp, Payload }
-//     ├── type Response struct { RequestID, Latency, ServerID, Success }
-//     └── type ServerConfig struct { BaseLatency, P99Latency, FailureRate }
-
 type Request struct {
 	ID        string    `json:"id"`
 	Timestamp time.Time `json:"ts"`
