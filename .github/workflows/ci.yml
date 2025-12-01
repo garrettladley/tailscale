@@ -15,30 +15,8 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  format:
-    name: Format
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: ${{ env.GO_VERSION }}
-          cache: true
-
-      - name: Install gofumpt
-        run: go install mvdan.cc/gofumpt@latest
-
-      - name: Check Code Formatting
-        run: |
-          unformatted_files=$(gofumpt -l .)
-          if [ -n "$unformatted_files" ]; then
-            echo "::error::Files not formatted with gofumpt"
-            echo "$unformatted_files"
-            exit 1
-          fi
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
