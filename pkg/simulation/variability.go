@@ -12,19 +12,19 @@ type LatencyVarier interface {
 var _ LatencyVarier = (*RandomLatencyVarier)(nil)
 
 type RandomLatencyVarier struct {
-	r         *rand.Rand
+	rand      *rand.Rand
 	maxJitter time.Duration
 }
 
-func NewRandomLatencyVarier(r rand.Rand, maxJitter time.Duration) *RandomLatencyVarier {
+func NewRandomLatencyVarier(rand rand.Rand, maxJitter time.Duration) *RandomLatencyVarier {
 	return &RandomLatencyVarier{
-		r:         &r,
+		rand:      &rand,
 		maxJitter: maxJitter,
 	}
 }
 
 func (lv *RandomLatencyVarier) AddVariability(base time.Duration, p99 time.Duration) time.Duration {
-	float := lv.r.Float64()
+	float := lv.rand.Float64()
 
 	if float < 0.001 { // 0.1% of the time
 		return 10 * p99
@@ -34,7 +34,7 @@ func (lv *RandomLatencyVarier) AddVariability(base time.Duration, p99 time.Durat
 	}
 
 	// else: 99% of the time - base with random jitter
-	return max(0, jitter(lv.r, base, lv.maxJitter)) // clamp to 0 to prevent negative durations when maxJitter > base
+	return max(0, jitter(lv.rand, base, lv.maxJitter)) // clamp to 0 to prevent negative durations when maxJitter > base
 }
 
 // jitter adds random jitter to base, returning base +/- maxJitter.
