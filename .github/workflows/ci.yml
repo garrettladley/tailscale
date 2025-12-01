@@ -12,9 +12,6 @@ on:
       - go.sum
       - Makefile
       - .github/workflows/ci.yml
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   lint:
