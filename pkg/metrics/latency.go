@@ -101,12 +101,12 @@ func percentile(sorted []time.Duration, p float64) time.Duration {
 	}
 
 	// find the position: p * (n-1)
-	pos := p * float64(len(sorted)-1)
+	pos := p * float64(lenSorted-1)
 	lower := int(pos)
 	upper := lower + 1
 
-	if upper >= len(sorted) {
-		return sorted[len(sorted)-1]
+	if upper >= lenSorted {
+		return sorted[lenSorted-1]
 	}
 
 	fraction := pos - float64(lower)
