@@ -24,6 +24,11 @@ func Baseline(ctx context.Context, cluster *cluster.Cluster, req request.Request
 	return getBaselineFinalResponse(req.ID, responses...)
 }
 
+const (
+	delimiter  = "|"
+	hashPrefix = "aggregated_servers"
+)
+
 func getBaselineFinalResponse(requestID string, responses ...response.Response) response.Response {
 	var (
 		serverIDs         = make([]string, len(responses))
@@ -54,7 +59,7 @@ func getBaselineFinalResponse(requestID string, responses ...response.Response) 
 		err = firstErr
 	}
 
-	serverID := xstrings.HashStrings("|", append([]string{"aggregated_servers"}, serverIDs...)...)
+	serverID := xstrings.HashStrings(delimiter, append([]string{hashPrefix}, serverIDs...)...)
 	return response.Response{
 		RequestID:      requestID,
 		Latency:        maxLatency,
